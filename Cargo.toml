@@ -1,0 +1,4 @@
+[package]
+name = "phys2d"
+version = "0.1.0"
+authors = ["Marcos Cosmos <m.cosmos42@gmail.com>"]

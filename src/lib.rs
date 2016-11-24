@@ -1,0 +1,6 @@
+//!BASIC VECTO	R2D IMPLEMETATION FOR USE WITHIN VARIOUS CODINGGAME PROJECTS, ETC TODO: DOCUMENT
+//!TODO: DOCUMENT THIS STUFF; also add more tests
+pub mod vec2d;
+pub use vec2d::Vec2D;
+#[cfg(test)]
+mod tests;
