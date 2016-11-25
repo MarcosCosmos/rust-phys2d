@@ -4,14 +4,14 @@ use std::fmt::Debug;
 /// a fairly straight-forward 2D vector type (in the mathematical sense), generally supporting:
 /// PartialEq, partialordering, addition, subtraction, scalar multiplication, scalar division, and dot-product operations
 /// Note: a default implementation is provided for these implementations but these are provide when the support of the relevant traits/operations is present in the scalar types used
-#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
-pub struct Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd {
+#[derive(Copy, Clone, Debug, PartialEq, PartialOrd, Default)]
+pub struct Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default {
 	pub x: T,
 	pub y: T
 }
 
 
-impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd,  {
+impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 	/// Creates a new `Vec2D` by assigning the parameters to the x and y members respectively.
 	pub fn new(x: T, y: T) -> Vec2D<T> {
 		Vec2D{x: x, y: y}
@@ -69,7 +69,7 @@ impl std::convert::From<Vec2D<i32>> for Vec2D<f64> {
 	}
 } 
 
-impl<T> Add<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Add<Output=T>, {
+impl<T> Add<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + Add<Output=T>, {
 	type Output = Vec2D<T>;
 	/// Adds two `Vec2D` together (by summing their members)
 	/// # Examples
@@ -84,7 +84,7 @@ impl<T> Add<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Ad
 	}
 }
 
-impl<T> AddAssign<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + AddAssign {
+impl<T> AddAssign<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + AddAssign {
 	/// Adds two `Vec2D` togther and stores the result into the first
 	/// # Examples
 	/// ```
@@ -100,7 +100,7 @@ impl<T> AddAssign<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOr
 	}
 }
 
-impl<T> Sub<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Sub<Output=T> {
+impl<T> Sub<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + Sub<Output=T> {
 	/// Subtracts one `Vec2D` from another (by subtracting their members)
 	/// # Examples
 	/// ```
@@ -115,7 +115,7 @@ impl<T> Sub<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Su
 	}
 }
 
-impl<T> SubAssign<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + SubAssign {
+impl<T> SubAssign<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + SubAssign {
 	/// Subtracts one `Vec2D` from another and stores the result in the first
 	/// # Examples
 	/// ```
@@ -130,7 +130,7 @@ impl<T> SubAssign<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOr
 		self.y -= rhs.y;
 	}
 }
-impl<T> Mul<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Mul<Output=T> {
+impl<T> Mul<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + Mul<Output=T> {
 	type Output = Vec2D<T>;
 
 	/// Multiplies a `Vec2D` by it's scalar `T` (by multiplying it's members by the scalar)
@@ -146,7 +146,7 @@ impl<T> Mul<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Mul<Outpu
 	}
 } 
 
-impl<T> MulAssign<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + MulAssign {
+impl<T> MulAssign<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + MulAssign {
 
 	/// Multiplies a `Vec2D` by it's scalar `T` and stores the result into the `Vec2D`
 	/// # Examples
@@ -163,7 +163,7 @@ impl<T> MulAssign<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Mul
 	}
 }
 
-impl<T> Div<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Div<Output=T> {
+impl<T> Div<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + Div<Output=T> {
 	type Output = Vec2D<T>;
 
 	/// Divides a `Vec2D` by it's scalar `T` (by dividing it's members by the scalar)
@@ -184,7 +184,7 @@ impl<T> Div<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + Div<Outpu
 }
 
 
-impl<T> DivAssign<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd + DivAssign {
+impl<T> DivAssign<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + DivAssign {
 
 	/// Divides a `Vec2D` by it's scalar `T` and stores the result into the `Vec2D`
 	/// Note: truncates by default if the underlying types truncate
