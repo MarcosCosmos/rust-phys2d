@@ -30,8 +30,7 @@ impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 		a.x*b.x + a.y*b.y
 	}
 
-	/// determines the magnitude of the vector in terms it's scalar type.
-	///P indicates to precision to use (note: this always returns a floating point number)
+	/// determines the magnitude of the vector's polar form in terms it's scalar type.
 	/// # Examples
 	/// ```
 	/// 	use phys2d::vec2d::Vec2D;
@@ -41,6 +40,12 @@ impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 	/// ```
 	pub fn magnitude (&self) -> f64 where T: Add<Output=T>+Mul<Output=T>, f64: std::convert::From<T> {
 		f64::from(self.x*self.x + self.y*self.y).sqrt()
+	}
+
+	///gets the angle of the vector's polar form
+	///TODO: CREATE TESTS FOR THIS
+	pub fn angle (&self) -> f64 where T: Add<Output=T>+Mul<Output=T>, f64: std::convert::From<T> {
+		return f64::from(self.y).atan2(f64::from(self.x));
 	}
 
 	///TODO: CREATE TESTS FOR THIS
@@ -67,7 +72,7 @@ impl std::convert::From<Vec2D<i32>> for Vec2D<f64> {
 	fn from(src: Vec2D<i32>) -> Vec2D<f64> {
 		Vec2D::new((src.x as f64), (src.y as f64))
 	}
-} 
+}
 
 impl<T> Add<Vec2D<T>> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + Add<Output=T>, {
 	type Output = Vec2D<T>;
