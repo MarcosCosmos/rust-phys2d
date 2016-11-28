@@ -42,23 +42,43 @@ impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 		f64::from(self.x*self.x + self.y*self.y).sqrt()
 	}
 
-	///gets the angle of the vector's polar form
-	///TODO: CREATE TESTS FOR THIS
+	/// gets the angle of the vector's polar form
+	/// TODO: CREATE TESTS FOR THIS
+	/// #Examples
+	/// ```
+	/// 	use phys2d::vec2d::Vec2D;
+	/// 	assert_eq!(Vec2D::new(0, 1).angle(), std::f64::consts::PI);
+	/// ```
 	pub fn angle (&self) -> f64 where T: Add<Output=T>+Mul<Output=T>, f64: std::convert::From<T> {
 		return f64::from(self.y).atan2(f64::from(self.x));
 	}
 
-	///TODO: CREATE TESTS FOR THIS
+	/// Creates a unit equivilant of the vector (same direction, magnitude 1)
+	/// #Examples
+	/// ```
+	/// 	use phys2d::vec2d::Vec2D;
+	/// 	let a = Vec2D::new(5,5);
+	/// 	let b = a.to_unit();
+	/// 	assert_eq!(a.angle(), b.angle());
+	/// 	assert_eq!(b.magnitude(), 1f64);
+	/// 	assert!(a.magnitude() != 1f64);
+	/// ```
 	pub fn to_unit(self) -> Vec2D<f64> where T: Add<Output=T>+Mul<Output=T>, f64: std::convert::From<T> {
 		let mag = self.magnitude();
 		Vec2D::new(f64::from(self.x)/mag, f64::from(self.y)/mag)
 	}
 
-	///TODO: CREATE TESTS FOR THIS
-	pub fn projection(a: Vec2D<T>, b: Vec2D<T>) -> Vec2D<f64> where T: Add<Output=T>+Mul<Output=T>, Vec2D<f64>: std::convert::From<Vec2D<T>>, f64: std::convert::From<T>
+	/// Projects a onto b
+	/// #Examples
+	/// ```
+	///		use phys2d::vec2d::Vec2D;
+	/// 	let a = Vec2D::new(5,5);
+	///		assert_eq!(a.project_onto(Vec2D::new(0,1)), Vec2D::new(0,5));
+	/// ```
+	pub fn project_onto(self, b: Vec2D<T>) -> Vec2D<f64> where T: Add<Output=T>+Mul<Output=T>, Vec2D<f64>: std::convert::From<Vec2D<T>>, f64: std::convert::From<T>
 	{
 		let unit_b = b.to_unit();
-		unit_b*(Vec2D::dot_product(<Vec2D<f64>>::from(a), unit_b))
+		unit_b*(Vec2D::dot_product(<Vec2D<f64>>::from(self), unit_b))
 	}
 
 	///gets an all-positive version of the vector
