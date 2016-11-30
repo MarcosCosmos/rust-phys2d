@@ -35,7 +35,6 @@ impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 	/// ```
 	/// 	use phys2d::vec2d::Vec2D;
 	/// 	let b = Vec2D::new(3, 7);
-	///     println!("?", b.magnitude());
 	/// 	assert_eq!(b.magnitude(), 7.615773105863909);
 	/// ```
 	pub fn magnitude (&self) -> f64 where T: Add<Output=T>+Mul<Output=T>, f64: std::convert::From<T> {
@@ -47,7 +46,7 @@ impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 	/// #Examples
 	/// ```
 	/// 	use phys2d::vec2d::Vec2D;
-	/// 	assert_eq!(Vec2D::new(0, 1).angle(), std::f64::consts::PI);
+	/// 	assert_eq!(Vec2D::new(0, 1).angle(), std::f64::consts::PI/2f64);
 	/// ```
 	pub fn angle (&self) -> f64 where T: Add<Output=T>+Mul<Output=T>, f64: std::convert::From<T> {
 		return f64::from(self.y).atan2(f64::from(self.x));
@@ -56,11 +55,12 @@ impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 	/// Creates a unit equivilant of the vector (same direction, magnitude 1)
 	/// #Examples
 	/// ```
+	///		use std;
 	/// 	use phys2d::vec2d::Vec2D;
 	/// 	let a = Vec2D::new(5,5);
 	/// 	let b = a.to_unit();
 	/// 	assert_eq!(a.angle(), b.angle());
-	/// 	assert_eq!(b.magnitude(), 1f64);
+	/// 	assert!(b.magnitude()-1f64 < std::f64::EPSILON);
 	/// 	assert!(a.magnitude() != 1f64);
 	/// ```
 	pub fn to_unit(self) -> Vec2D<f64> where T: Add<Output=T>+Mul<Output=T>, f64: std::convert::From<T> {
@@ -73,7 +73,7 @@ impl<T> Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default,  {
 	/// ```
 	///		use phys2d::vec2d::Vec2D;
 	/// 	let a = Vec2D::new(5,5);
-	///		assert_eq!(a.project_onto(Vec2D::new(0,1)), Vec2D::new(0,5));
+	///		assert_eq!(a.project_onto(Vec2D::new(0,1)), Vec2D::new(0f64,5f64));
 	/// ```
 	pub fn project_onto(self, b: Vec2D<T>) -> Vec2D<f64> where T: Add<Output=T>+Mul<Output=T>, Vec2D<f64>: std::convert::From<Vec2D<T>>, f64: std::convert::From<T>
 	{
@@ -231,4 +231,12 @@ impl<T> DivAssign<T> for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Defau
 	}
 }
 
+impl<T> Neg for Vec2D<T> where T: Copy+Debug+PartialEq+PartialOrd+Default + Neg<Output=T>
+{
+	type Output = Self;
+	///TODO: CREATE UNIT TEST FOR THIS
+	fn neg(self) -> Vec2D<T> {
+		Vec2D::new(-self.x, -self.y)
+	}
+}
 
