@@ -1,4 +1,4 @@
-use vec2d::*;
+use phys2d::vec2d::*;
 #[test]
 fn with_int() {
 	let n = 4;
